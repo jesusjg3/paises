@@ -1,5 +1,5 @@
 <?php 
-$cadena = $_GET["q"];
+$q = $_GET["q"];
 $paises = array (
   'AF' => 'Afghanistan',
   'AL' => 'Albania',
@@ -218,7 +218,7 @@ $paises = array (
   'ZA' => 'South Africa',
   'GS' => 'South Georgia and the South Sandwich Islands',
   'KR' => 'South Korea',
-  'ES' => 'España',
+  'ES' => 'Spain',
   'LK' => 'Sri Lanka',
   'SD' => 'Sudan',
   'SR' => 'Suriname',
@@ -266,9 +266,21 @@ $paises = array (
   'ZW' => 'Zimbabwe',
   'AX' => 'Åland Islands',
 );
-foreach($paises as $p){
-	if(strstr($p, $cadena)>-1){
-		print "<br>".$p;
-	}
+$salida = "";
+//validamos la cadena
+if ($q != "") {
+  $q = strtolower($q);
+  $len = strlen($q);
+  foreach ($paises as $pais) {
+    if (stristr($q, substr($pais, 0, $len))) {
+      if ($salida==="") {
+        $salida = $pais;
+      } else {
+        $salida .= ", ".$pais;
+      }
+    }
+  }
 }
+//regresamos la cadena de salida
+print $salida === "" ? "No hay sugerencias" : $salida;
 ?>
